@@ -52,6 +52,34 @@ st.markdown(
 
         --border-dark: #2d372f;
         --border-light: #d8d0c1;
+
+        /* --------------------------------------------------
+   HIDE STREAMLIT HEADER / TOOLBAR
+-------------------------------------------------- */
+
+header[data-testid="stHeader"] {
+    display: none !important;
+}
+
+[data-testid="stToolbar"] {
+    display: none !important;
+}
+
+[data-testid="stDecoration"] {
+    display: none !important;
+}
+
+[data-testid="stStatusWidget"] {
+    display: none !important;
+}
+
+#MainMenu {
+    visibility: hidden !important;
+}
+
+footer {
+    visibility: hidden !important;
+}
     }
 
     /* --------------------------------------------------
