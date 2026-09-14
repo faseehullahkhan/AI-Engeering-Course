@@ -4,9 +4,30 @@ import streamlit as st
 from dotenv import load_dotenv
 from google import genai
 
+
+# --------------------------------------------------
+# ENVIRONMENT
+# --------------------------------------------------
+
+# Loads .env locally.
+# On Streamlit Cloud, the API key will come from st.secrets.
 load_dotenv()
 
-st.set_page_config(page_title="Table for One", page_icon="🍳", layout="wide")
+
+# --------------------------------------------------
+# PAGE CONFIG
+# --------------------------------------------------
+
+st.set_page_config(
+    page_title="Table for One",
+    page_icon="🍳",
+    layout="wide",
+)
+
+
+# --------------------------------------------------
+# STYLING
+# --------------------------------------------------
 
 st.markdown(
     """
@@ -81,24 +102,15 @@ st.markdown(
         max-width: 800px;
     }
 
-    h2,
-    h3 {
-        color: var(--text-dark);
-    }
-
     .eyebrow {
         display: inline-block;
-
         color: var(--gold);
         font-size: 0.78rem;
         font-weight: 700;
-
         letter-spacing: 0.18em;
         text-transform: uppercase;
-
         border: 1px solid rgba(213, 173, 104, 0.35);
         border-radius: 999px;
-
         padding: 0.45rem 0.85rem;
         margin-bottom: 0.7rem;
     }
@@ -107,7 +119,6 @@ st.markdown(
         color: var(--muted-light);
         font-size: 1.05rem;
         line-height: 1.8;
-
         max-width: 40rem;
         margin-bottom: 1.8rem;
     }
@@ -166,12 +177,11 @@ st.markdown(
 
         border: 1px solid var(--border-dark);
         border-radius: 22px;
-
         padding: 1.7rem;
 
         box-shadow:
             0 24px 60px rgba(0, 0, 0, 0.28),
-            inset 0 1px 0 rgba(255,255,255,0.025);
+            inset 0 1px 0 rgba(255, 255, 255, 0.025);
     }
 
     div[data-testid="stForm"] label,
@@ -187,10 +197,8 @@ st.markdown(
     .stTextArea textarea {
         background: #111612 !important;
         color: var(--text-light) !important;
-
         border: 1px solid #303b32 !important;
         border-radius: 12px !important;
-
         padding: 0.9rem !important;
     }
 
@@ -200,30 +208,19 @@ st.markdown(
 
     .stTextArea textarea:focus {
         border-color: var(--sage) !important;
-
         box-shadow:
             0 0 0 2px rgba(156, 175, 136, 0.15) !important;
     }
 
-    .stSelectbox [data-baseweb="select"] > div,
-    .stSelectSlider [data-baseweb="slider"] {
+    .stSelectbox [data-baseweb="select"] > div {
         background: #111612;
         color: var(--text-light);
-
         border-color: #303b32;
         border-radius: 10px;
     }
 
     .stSelectbox [data-baseweb="select"] span {
         color: var(--text-light);
-    }
-
-    /* --------------------------------------------------
-       SLIDERS
-    -------------------------------------------------- */
-
-    .stSlider [data-baseweb="slider"] > div > div {
-        background-color: var(--sage);
     }
 
     /* --------------------------------------------------
@@ -240,13 +237,10 @@ st.markdown(
             );
 
         color: #172015;
-
         border: 0;
         border-radius: 12px;
-
         font-weight: 700;
         font-size: 0.98rem;
-
         min-height: 3.1rem;
 
         box-shadow:
@@ -268,7 +262,6 @@ st.markdown(
             );
 
         color: #111711;
-
         transform: translateY(-2px);
 
         box-shadow:
@@ -281,7 +274,7 @@ st.markdown(
     }
 
     /* --------------------------------------------------
-       RECIPE CARD
+       PLACEHOLDER CARD
     -------------------------------------------------- */
 
     .recipe-shell {
@@ -295,13 +288,9 @@ st.markdown(
             );
 
         color: var(--text-dark);
-
         border: 1px solid var(--border-light);
         border-radius: 24px;
-
         padding: 2.5rem 2.7rem;
-
-        min-height: 360px;
 
         box-shadow:
             0 25px 70px rgba(0, 0, 0, 0.30);
@@ -313,7 +302,6 @@ st.markdown(
         top: 0;
         left: 2.5rem;
         right: 2.5rem;
-
         height: 4px;
 
         background:
@@ -326,41 +314,34 @@ st.markdown(
         border-radius: 0 0 10px 10px;
     }
 
-    .recipe-shell h1,
-    .recipe-shell h2,
-    .recipe-shell h3 {
-        color: var(--text-dark);
-    }
-
     .recipe-shell h2 {
+        color: var(--text-dark);
         font-size: 2rem;
         margin-top: 0.25rem;
     }
 
-    .recipe-shell p,
-    .recipe-shell li {
+    .recipe-shell p {
         color: #394139;
         line-height: 1.75;
     }
 
-    .recipe-shell strong {
-        color: var(--sage-dark) !important;
-    }
-
-    .recipe-shell hr {
-        border-color: var(--border-light);
-    }
-
     /* --------------------------------------------------
-       GENERATED MARKDOWN
+       GENERATED RECIPE
     -------------------------------------------------- */
 
-    [data-testid="stMarkdownContainer"] strong {
-        color: var(--sage);
+    div[data-testid="stMarkdownContainer"] h1,
+    div[data-testid="stMarkdownContainer"] h2,
+    div[data-testid="stMarkdownContainer"] h3 {
+        color: var(--text-light);
     }
 
-    .recipe-shell [data-testid="stMarkdownContainer"] strong {
-        color: var(--sage-dark);
+    div[data-testid="stMarkdownContainer"] p,
+    div[data-testid="stMarkdownContainer"] li {
+        line-height: 1.7;
+    }
+
+    div[data-testid="stMarkdownContainer"] strong {
+        color: var(--sage);
     }
 
     /* --------------------------------------------------
@@ -369,14 +350,6 @@ st.markdown(
 
     [data-testid="stAlert"] {
         border-radius: 12px;
-    }
-
-    /* --------------------------------------------------
-       SPINNER
-    -------------------------------------------------- */
-
-    [data-testid="stSpinner"] {
-        color: var(--cream);
     }
 
     /* --------------------------------------------------
@@ -403,10 +376,55 @@ st.markdown(
 )
 
 
-@st.cache_resource
-def get_client() -> genai.Client:
-    return genai.Client()
+# --------------------------------------------------
+# API KEY
+# --------------------------------------------------
 
+def get_api_key():
+    """
+    Local:
+        Reads GOOGLE_API_KEY from .env
+
+    Streamlit Cloud:
+        Reads GOOGLE_API_KEY from Streamlit Secrets
+    """
+
+    # First try local environment variable
+    api_key = os.getenv("GOOGLE_API_KEY")
+
+    if api_key:
+        return api_key
+
+    # Then try Streamlit Cloud secrets
+    try:
+        api_key = st.secrets.get("GOOGLE_API_KEY")
+
+        if api_key:
+            return api_key
+
+    except Exception:
+        pass
+
+    return None
+
+
+# --------------------------------------------------
+# GEMINI CLIENT
+# --------------------------------------------------
+
+@st.cache_resource
+def get_client():
+    api_key = get_api_key()
+
+    if not api_key:
+        return None
+
+    return genai.Client(api_key=api_key)
+
+
+# --------------------------------------------------
+# RECIPE GENERATION
+# --------------------------------------------------
 
 def generate_recipe(
     ingredients: list[str],
@@ -416,6 +434,11 @@ def generate_recipe(
     time_limit: str,
     mood: str,
 ) -> str:
+
+    client = get_client()
+
+    if client is None:
+        raise ValueError("Google API key is not configured.")
 
     prompt = f"""
 Create one genuinely cookable recipe using these ingredients: {', '.join(ingredients)}.
@@ -431,15 +454,18 @@ Requirements:
 - Make reasonable substitutions if an ingredient is unusual or missing.
 
 Format the answer in Markdown with exactly these sections:
+
 1. A memorable recipe title and one-sentence description.
 2. **Ingredients** with quantities.
 3. **Method** as numbered, practical steps.
 4. **Make it better** with two useful tips and one substitution.
 5. A final line with prep time, cook time, and servings.
-Keep the recipe under 450 words. Be specific and appetizing, not generic.
+
+Keep the recipe under 450 words.
+Be specific and appetizing, not generic.
 """
 
-    response = get_client().models.generate_content(
+    response = client.models.generate_content(
         model="gemini-3.5-flash",
         contents=prompt,
     )
@@ -447,10 +473,17 @@ Keep the recipe under 450 words. Be specific and appetizing, not generic.
     return response.text
 
 
+# --------------------------------------------------
+# SIDEBAR
+# --------------------------------------------------
+
 with st.sidebar:
+
     st.markdown("## Recipe studio")
+
     st.caption(
-        "Tell us what is in the kitchen. We will handle the rest."
+        "Tell us what is in the kitchen. "
+        "We will handle the rest."
     )
 
     st.divider()
@@ -463,6 +496,10 @@ with st.sidebar:
         "- Your time and dietary limits"
     )
 
+
+# --------------------------------------------------
+# HERO
+# --------------------------------------------------
 
 st.markdown(
     '<p class="eyebrow">Your next good meal</p>',
@@ -487,11 +524,20 @@ st.markdown(
 
 st.write("")
 
+
+# --------------------------------------------------
+# LAYOUT
+# --------------------------------------------------
+
 left, right = st.columns(
     [0.95, 1.25],
     gap="large",
 )
 
+
+# --------------------------------------------------
+# FORM
+# --------------------------------------------------
 
 with left:
 
@@ -499,7 +545,10 @@ with left:
 
         ingredients_text = st.text_area(
             "What ingredients should we use?",
-            placeholder="potatoes, chickpeas, spinach, lemon, garlic",
+            placeholder=(
+                "potatoes, chickpeas, spinach, "
+                "lemon, garlic"
+            ),
             height=130,
         )
 
@@ -565,6 +614,10 @@ with left:
         )
 
 
+# --------------------------------------------------
+# OUTPUT
+# --------------------------------------------------
+
 with right:
 
     if submitted:
@@ -578,39 +631,41 @@ with right:
         if not ingredients:
 
             st.warning(
-                "Add at least one ingredient so the recipe "
-                "has somewhere to begin."
+                "Add at least one ingredient so the "
+                "recipe has somewhere to begin."
             )
 
-        elif not os.getenv("GOOGLE_API_KEY"):
+        elif not get_api_key():
 
             st.error(
-                "No Google API key found. "
-                "Add GOOGLE_API_KEY to your .env file and try again."
+                "Google API key is not configured."
             )
 
         else:
 
-            with st.spinner("Thinking through the flavors..."):
+            with st.spinner(
+                "Thinking through the flavors..."
+            ):
 
                 try:
 
                     recipe = generate_recipe(
-                        ingredients,
-                        cuisine,
-                        diet,
-                        servings,
-                        time_limit,
-                        mood,
+                        ingredients=ingredients,
+                        cuisine=cuisine,
+                        diet=diet,
+                        servings=servings,
+                        time_limit=time_limit,
+                        mood=mood,
                     )
 
-                    # Display recipe directly
+                    # Recipe is displayed directly.
+                    # No empty wrapper/card appears after generation.
                     st.markdown(recipe)
 
                 except Exception as error:
 
                     st.error(
-                        f"The recipe could not be generated "
+                        "The recipe could not be generated "
                         f"right now: {error}"
                     )
 
